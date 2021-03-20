@@ -1,0 +1,44 @@
+.ec-floating-menu {
+  & .trigger {
+    align-items: center;
+    border-radius: 9999px;
+    box-shadow: none;
+    cursor: pointer;
+    display: flex;
+    font-weight: 600;
+    justify-content: center;
+    letter-spacing: 0;
+    line-height: 0.5rem;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: none;
+    transition: background 100ms ease-out;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+
+    &--primary {
+      background-color: theme('colors.black');
+      border: 2px solid theme('colors.black');
+      color: theme('colors.white');
+
+      &:hover {
+        background-color: theme('colors.white');
+        border: 2px solid theme('colors.black');
+        color: theme('colors.black');
+
+        .icon {
+          color: theme('colors.black');
+        }
+      }
+    }
+
+    &--md {
+      padding: 0.5rem;
+    }
+  }
+}

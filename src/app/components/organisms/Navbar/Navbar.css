@@ -1,0 +1,15 @@
+.ec-navbar {
+  &__option {
+    color: theme('colors.gray.800');
+    cursor: pointer;
+    font-weight: 600;
+    padding: 1.25rem;
+
+    &.active {
+      background-color: theme('colors.gray.100');
+      border-bottom: 2px solid theme('colors.black');
+      color: theme('colors.black');
+      font-weight: 700;
+    }
+  }
+}

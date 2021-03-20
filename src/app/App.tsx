@@ -1,25 +1,27 @@
+/* --- DEPENDENCIES --- */
 import React from 'react';
-import logo from '@src/logo.svg';
+import { Switch, Redirect, Route } from 'react-router-dom';
+import FloatingMenu from '@atoms/FloatingMenu/FloatingMenu';
+import Navbar from '@organisms/Navbar/Navbar';
+import DashboardPage from '@pages/DashboardPage/DashboardPage';
+/* -------------------- */
 
-function App() {
+const App: React.FC = () => {
+  /*------------------*/
+  /*    RENDER JSX    */
+  /*------------------*/
   return (
-    <div className="App bg-gray-600 text-5xl">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App">
+      <Navbar />
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to="/dashboard" />
+        </Route>
+        <Route path="/dashboard" component={DashboardPage} exact />
+      </Switch>
+      <FloatingMenu className="fixed bottom-0 right-0 mb-4 mr-4 lg:mb-8 lg:mr-8" />
     </div>
   );
-}
+};
 
 export default App;
