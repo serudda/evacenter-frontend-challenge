@@ -6,7 +6,7 @@
 
 /* Base domain */
 export const LOCAL_BASE_DOMAIN = 'http://localhost:3000/';
-export const PROD_BASE_DOMAIN = 'https://www.evacenter.com';
+export const PROD_BASE_DOMAIN = 'https://evacenter-fe-challenge.netlify.app/';
 
 /* Environments */
 export const LOCAL = 'local';
