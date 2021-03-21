@@ -9,10 +9,6 @@ type Props = {
 };
 
 const DashboardPage: React.FC<Props> = ({ className }) => {
-  /*------------------*/
-  /*  INIT VARIABLES  */
-  /*------------------*/
-
   /*--------------------*/
   /*  CLASS ASSIGNMENT  */
   /*--------------------*/

@@ -2,6 +2,7 @@
 import React from 'react';
 import cn from 'classnames';
 import { Catalog as IconCatalog } from '@primitives/Icon/Icon';
+import RiskCard, { Type as RiskCardType } from '@atoms/Cards/RiskCard/RiskCard';
 import Stat from '@atoms/Stat/Stat';
 /* -------------------- */
 
@@ -18,10 +19,6 @@ const StatsSection: React.FC<Props> = ({ className }) => {
   /*  CLASS ASSIGNMENT  */
   /*--------------------*/
   const statsSectionClass = cn('stats-section flex space-x-5', className);
-
-  /*--------------------------*/
-  /*          HANDLES         */
-  /*--------------------------*/
 
   /*------------------*/
   /*    RENDER JSX    */
@@ -46,10 +43,7 @@ const StatsSection: React.FC<Props> = ({ className }) => {
         </div>
       </div>
       <div className="w-1/4">
-        <div className="flex flex-col p-6 space-y-2 w-full bg-green-100 border border-green-200 rounded-lg">
-          <span className="text-green-800 font-regular text-sm">Risk</span>
-          <span className="text-gray-900 font-bold text-3xl">Low</span>
-        </div>
+        <RiskCard type={RiskCardType.negative} />
       </div>
     </div>
   );
