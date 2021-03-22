@@ -1,5 +1,5 @@
 .ec-floating-menu {
-  & .trigger {
+  .trigger {
     align-items: center;
     border-radius: 9999px;
     box-shadow: none;

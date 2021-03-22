@@ -1,6 +1,8 @@
 /* --- DEPENDENCIES --- */
 import React from 'react';
 import cn from 'classnames';
+import HistorySection from './HistorySection/HistorySection';
+import PreviewSection from './PreviewSection/PreviewSection';
 import StatsSection from './StatsSection/StatsSection';
 /* -------------------- */
 
@@ -23,7 +25,17 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*------------------*/
   return (
     <div className={dashboardPageClass}>
-      <StatsSection />
+      <StatsSection className="mb-5" />
+
+      <div className="flex space-x-5">
+        <div className="w-1/2">
+          <HistorySection />
+        </div>
+
+        <div className="w-1/2">
+          <PreviewSection />
+        </div>
+      </div>
     </div>
   );
 };
