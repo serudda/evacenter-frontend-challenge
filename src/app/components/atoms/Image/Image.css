@@ -1,0 +1,12 @@
+.ec-image {
+  transition: opacity 0.5s;
+  max-width: none;
+
+  &--hidden {
+    opacity: 0;
+  }
+
+  &--visible {
+    opacity: 1;
+  }
+}
