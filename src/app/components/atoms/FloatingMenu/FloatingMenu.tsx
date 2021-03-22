@@ -7,9 +7,10 @@ import './FloatingMenu.css';
 
 type Props = {
   readonly className?: string;
+  readonly onClick?: (event: React.MouseEvent) => void;
 };
 
-const FloatingMenu: React.FC<Props> = ({ className }) => {
+const FloatingMenu: React.FC<Props> = ({ className, onClick }) => {
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
@@ -22,12 +23,16 @@ const FloatingMenu: React.FC<Props> = ({ className }) => {
   /*---------------------*/
   /*        HANDLES      */
   /*---------------------*/
+  const handleClick = (event: React.MouseEvent): void => {
+    if (event) event.persist();
+    if (onClick) onClick(event);
+  };
 
   /*------------------*/
   /*    RENDER JSX    */
   /*------------------*/
   return (
-    <div className={floatingMenuClass}>
+    <div className={floatingMenuClass} onClick={handleClick}>
       <button className="trigger trigger--md trigger--primary shadow-lg">
         <Icon className="icon" icon={IconCatalog.flame} width="40" height="40" iconStyle={IconStyle.duotone} />
       </button>

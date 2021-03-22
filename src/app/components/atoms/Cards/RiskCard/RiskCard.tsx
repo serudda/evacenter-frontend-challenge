@@ -23,7 +23,7 @@ type Props = {
   readonly className?: string;
 };
 
-const RiskCard: React.FC<Props> = ({ type = Type.default, className }) => {
+const RiskCard: React.FC<Props> = ({ type, className }) => {
   /*------------------*/
   /* CLASS ASSIGNMENT */
   /*------------------*/
