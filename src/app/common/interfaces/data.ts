@@ -1,7 +1,12 @@
-export interface SuggestionData {
-  id: string;
-  search_terms: string;
-  details: string;
-  img_url: string;
-  created_at: Date;
+export enum RiskType {
+  low = 'low',
+  mid = 'mid',
+  high = 'high',
+}
+
+export interface StatsData {
+  ambientTemperture: number;
+  exteriorTemperature: number;
+  patientTemperature: number;
+  risk: RiskType;
 }
