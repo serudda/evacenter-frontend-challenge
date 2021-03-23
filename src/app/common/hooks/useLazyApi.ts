@@ -3,13 +3,18 @@ import { useState } from 'react';
 import { isLocal } from '@config/config';
 /* -------------------- */
 
+export enum RequestType {
+  blob = 'blob',
+  json = 'json',
+}
+
 interface UseResponse<T> {
   fetchData: () => Promise<T | undefined>;
   loading: boolean;
   error?: string;
 }
 
-const useLazyApi = <T>(url: string): UseResponse<T> => {
+const useLazyApi = <T>(url: string, type = RequestType.json): UseResponse<T> => {
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
@@ -22,14 +27,14 @@ const useLazyApi = <T>(url: string): UseResponse<T> => {
     try {
       const response = await fetch(url);
       if (response.status === 200) {
-        const rawData: any = await response.json();
+        const rawData: any = await response[type]();
         return rawData;
       } else {
-        isLocal() && console.log('Error useApi try: ', error);
+        isLocal() && console.log('Error useLazyApi try: ', error);
         setError(response.statusText);
       }
     } catch (error) {
-      isLocal() && console.log('Error useApi catch: ', error);
+      isLocal() && console.log('Error useLazyApi catch: ', error);
       setError(error);
     } finally {
       setLoading(false);

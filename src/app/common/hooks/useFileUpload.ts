@@ -1,8 +1,9 @@
+/* --- DEPENDENCIES --- */
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import firebase from 'firebase';
-
 import { isLocal } from '@config/config';
 import { storageRef } from '@config/firebase/firebaseConfig';
+/* -------------------- */
 
 export interface UploadDataResponse {
   metaData: firebase.storage.FullMetadata;
@@ -41,7 +42,7 @@ const useFileUpload = (imageFolder: string): UseFileUploadResponse => {
       if (!fileToUpload) return;
 
       try {
-        const fName = `${new Date().getTime()}-${fileToUpload.name}`;
+        const fName = `${new Date().getTime()}`;
         const ref = storageRef.child(imageFolder + fName);
         const uploadTask = ref.put(fileToUpload);
 

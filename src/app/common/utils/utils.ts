@@ -30,6 +30,20 @@ export const formatBytes = (bytes = 0, decimals = 0): string => {
 };
 
 /**
+ * formatDate
+ * @description - parse a Timestamp value into a String
+ * @function
+ * @param {number} timestamp
+ * @return {string} parsed Date
+ * (e.g. input -> 1611917520, output -> 'Jan 29 2021').
+ */
+export const formatDate = (timestamp: number): string => {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const date = new Date(timestamp * 1000);
+  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+};
+
+/**
  * hasProp
  * @description - validate if an object has the prop passed arg
  * @function
