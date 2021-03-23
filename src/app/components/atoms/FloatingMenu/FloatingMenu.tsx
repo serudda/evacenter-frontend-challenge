@@ -12,10 +12,6 @@ type Props = {
 
 const FloatingMenu: React.FC<Props> = ({ className, onClick }) => {
   /*------------------*/
-  /*  INIT VARIABLES  */
-  /*------------------*/
-
-  /*------------------*/
   /* CLASS ASSIGNMENT */
   /*------------------*/
   const floatingMenuClass = cn(className, 'ec-floating-menu z-20');
