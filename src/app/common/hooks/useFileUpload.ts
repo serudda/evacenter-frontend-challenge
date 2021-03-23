@@ -42,7 +42,7 @@ const useFileUpload = (imageFolder: string): UseFileUploadResponse => {
       if (!fileToUpload) return;
 
       try {
-        const fName = `${new Date().getTime()}`;
+        const fName = `${Math.floor(Date.now() / 1000)}`;
         const ref = storageRef.child(imageFolder + fName);
         const uploadTask = ref.put(fileToUpload);
 
