@@ -10,3 +10,9 @@ export interface StatsData {
   patientTemperature: number;
   risk: RiskType;
 }
+
+export interface PreviewData {
+  uid: string;
+  name: string;
+  imageUrl: string;
+}
