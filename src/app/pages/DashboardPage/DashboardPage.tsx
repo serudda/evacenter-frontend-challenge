@@ -20,10 +20,10 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
-  const { fetchData } = useLazyApi<StatsData>(appConstants.DATA_URL as string);
-  const { fetchData: fetchImage } = useLazyApi<File>(appConstants.IMAGE_URL as string, RequestType.blob);
+  const { fetchData: fetchStats } = useLazyApi<StatsData>(appConstants.DATA_URL as string);
+  const { fetchData: fetchImage, loading } = useLazyApi<File>(appConstants.IMAGE_URL as string, RequestType.blob);
   const { create, getAll } = useFirebase('previews');
-  const [{ fileData }, , setFileToUpload] = useFileUpload('images/test/');
+  const [{ fileData }, , setFileToUpload] = useFileUpload('images/previews/');
   const [statsData, setStatsData] = useState<StatsData>();
   const [previewData, setPreviewData] = useState<Array<PreviewData>>([]);
 
@@ -39,11 +39,17 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
     return await create(data);
   };
 
+  const getStats = async () => {
+    const statsData = await fetchStats();
+    setStatsData(statsData);
+  };
+
   const getPreviews = async () => {
     const previewData = await getAll();
     setPreviewData(previewData as Array<PreviewData>);
   };
 
+  // Save data in Firebase after upload the preview images
   useEffect(() => {
     if (fileData) {
       saveData(fileData).then(async (response) => {
@@ -53,8 +59,18 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
     }
   }, [fileData]);
 
+  // Get Preview data to build History list
   useEffect(() => {
     getPreviews();
+  }, []);
+
+  // Get Stats every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (loading) return;
+      getStats();
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   /*--------------------*/
@@ -66,10 +82,8 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*          HANDLES         */
   /*--------------------------*/
   const handleTakePictureBtnClick = async () => {
-    const newStatsData = await fetchData();
     const imageData = await fetchImage();
     if (imageData) uploadFile(imageData);
-    setStatsData(newStatsData);
   };
 
   /*------------------*/
