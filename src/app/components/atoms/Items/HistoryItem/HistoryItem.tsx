@@ -10,12 +10,15 @@ import Tooltip, {
 /* -------------------- */
 
 type Props = {
+  readonly id: string;
   readonly name: string;
   readonly downloadUrl: string;
+  readonly isActive: boolean;
   readonly className?: string;
+  readonly onClick?: (id: string) => void;
 };
 
-const HistoryItem: React.FC<Props> = ({ name, downloadUrl, className }) => {
+const HistoryItem: React.FC<Props> = ({ id, name, downloadUrl, isActive = false, className, onClick }) => {
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
@@ -27,11 +30,17 @@ const HistoryItem: React.FC<Props> = ({ name, downloadUrl, className }) => {
   const historyItemClass = cn(
     'history-item flex border-b border-gray-100 hover:bg-gray-50 cursor-pointer pl-6 p-4',
     className,
+    {
+      'bg-gray-50': isActive,
+    },
   );
 
   /*---------------------*/
   /*        HANDLES      */
   /*---------------------*/
+  const handleClick = () => {
+    if (onClick) onClick(id);
+  };
   const handleMouseEnter = () => setShowDownloadButton(true);
 
   const handleMouseLeave = () => setShowDownloadButton(false);
@@ -40,7 +49,12 @@ const HistoryItem: React.FC<Props> = ({ name, downloadUrl, className }) => {
   /*    RENDER JSX    */
   /*------------------*/
   return (
-    <div className={historyItemClass} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div
+      className={historyItemClass}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
+    >
       <div className="text-base text-gray-400 block overflow-hidden truncate self-center">{name}</div>
       <div className="flex items-center ml-auto space-x-3">
         {showDownloadButton && (
@@ -64,15 +78,17 @@ const HistoryItem: React.FC<Props> = ({ name, downloadUrl, className }) => {
         )}
 
         {/* SEE IMAGE BUTTON */}
-        <div className="p-1 rounded-md">
-          <Icon
-            className="text-gray-500"
-            icon={IconCatalog.chevronRight}
-            iconStyle={IconStyle.regular}
-            width="24"
-            height="24"
-          />
-        </div>
+        {isActive && (
+          <div className="p-1 rounded-md">
+            <Icon
+              className="text-gray-500"
+              icon={IconCatalog.chevronRight}
+              iconStyle={IconStyle.regular}
+              width="24"
+              height="24"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

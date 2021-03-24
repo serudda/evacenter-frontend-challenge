@@ -22,7 +22,7 @@ const HistorySectionSkeleton: React.FC<Props> = ({ className }) => {
   const historySkeletonGrid = Array(5)
     .fill('')
     .map((item, index) => (
-      <div key={index} className="animate-pulse flex border-b border-gray-100 p-9">
+      <div key={index} className="animate-pulse flex border-b border-gray-100 p-6">
         <div className="text-base text-gray-400 block overflow-hidden truncate self-center">
           <div className="h-2 bg-gray-200 w-32">{item}</div>
         </div>

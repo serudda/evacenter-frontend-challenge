@@ -1,5 +1,5 @@
 /* --- DEPENDENCIES --- */
-import React from 'react';
+import React, { useState } from 'react';
 import cn from 'classnames';
 import { PreviewData } from '@interfaces/data';
 import { formatDate } from '@utils/utils';
@@ -15,16 +15,28 @@ type Props = {
 };
 
 const HistorySection: React.FC<Props> = ({ loading = false, list, className }) => {
+  const [selectedItem, setSelectedItem] = useState<PreviewData>();
   /*--------------------*/
   /*  CLASS ASSIGNMENT  */
   /*--------------------*/
   const historySectionClass = cn('history-section', className);
 
+  const handleItemClick = (item: PreviewData) => (): void => {
+    setSelectedItem(item);
+  };
+
   /*------------------*/
   /*    RENDER JSX    */
   /*------------------*/
   const renderItemList = list.map((item) => (
-    <HistoryItem key={item.id} name={formatDate(item.name)} downloadUrl={item.imageUrl} />
+    <HistoryItem
+      key={item.id}
+      id={item.id}
+      name={formatDate(item.name)}
+      downloadUrl={item.imageUrl}
+      onClick={handleItemClick(item)}
+      isActive={selectedItem?.id === item.id}
+    />
   ));
 
   const renderContent = (): JSX.Element => {
