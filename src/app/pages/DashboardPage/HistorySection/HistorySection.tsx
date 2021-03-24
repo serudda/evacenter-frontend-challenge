@@ -12,17 +12,26 @@ type Props = {
   readonly list: Array<PreviewData>;
   readonly loading?: boolean;
   readonly className?: string;
+  readonly onSelectItem?: (item: PreviewData) => void;
 };
 
-const HistorySection: React.FC<Props> = ({ loading = false, list, className }) => {
+const HistorySection: React.FC<Props> = ({ loading = false, list, onSelectItem, className }) => {
+  /*------------------*/
+  /*  INIT VARIABLES  */
+  /*------------------*/
   const [selectedItem, setSelectedItem] = useState<PreviewData>();
+
   /*--------------------*/
   /*  CLASS ASSIGNMENT  */
   /*--------------------*/
   const historySectionClass = cn('history-section', className);
 
+  /*---------------------*/
+  /*        HANDLES      */
+  /*---------------------*/
   const handleItemClick = (item: PreviewData) => (): void => {
     setSelectedItem(item);
+    if (onSelectItem) onSelectItem(item);
   };
 
   /*------------------*/

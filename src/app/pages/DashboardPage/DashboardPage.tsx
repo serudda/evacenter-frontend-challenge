@@ -25,7 +25,7 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   const { create, getAll, loading: loadingHistory } = useFirebase('history');
   const [{ fileData, loading: uploading }, , setFileToUpload] = useFileUpload('images/previews/');
   const [historyData, setHistoryData] = useState<Array<PreviewData>>([]);
-  // const [loadingPreviewImage, setLoadingPreviewImage] = useState(true);
+  const [previewImage, setPreviewImage] = useState<{ name: string; imageUrl: string }>();
 
   const uploadFile = (fileData: File) => {
     setFileToUpload(fileData);
@@ -50,6 +50,7 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
       saveData(fileData).then(async (response) => {
         if (response !== CreateResponse.ok) return;
         getHistory();
+        setPreviewImage({ name: fileData.metaData.name, imageUrl: fileData.downloadUrl });
       });
     }
   }, [fileData]);
@@ -68,9 +69,12 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*          HANDLES         */
   /*--------------------------*/
   const handleTakePictureBtnClick = async () => {
-    // setLoadingPreviewImage(true);
     const imageData = await fetchImage();
     if (imageData) uploadFile(imageData);
+  };
+
+  const handleSelectItem = (item: PreviewData) => {
+    setPreviewImage({ name: item.name, imageUrl: item.imageUrl });
   };
 
   /*------------------*/
@@ -82,14 +86,14 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
 
       <div className="flex space-x-5">
         <div className="w-1/2">
-          <HistorySection list={historyData} loading={loadingHistory} />
+          <HistorySection list={historyData} loading={loadingHistory} onSelectItem={handleSelectItem} />
         </div>
 
         <div className="w-1/2">
           <PreviewSection
             loading={uploading}
-            imageUrl={fileData?.downloadUrl}
-            imageName={formatDate(fileData?.metaData.name)}
+            imageUrl={previewImage?.imageUrl}
+            imageName={formatDate(previewImage?.name)}
           />
         </div>
       </div>
