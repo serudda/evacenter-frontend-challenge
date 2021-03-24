@@ -40,11 +40,13 @@ export const formatBytes = (bytes = 0, decimals = 0): string => {
 export const formatTime = (date: Date) => {
   let hours = date.getHours();
   let minutes: number | string = date.getMinutes();
+  let seconds: number | string = date.getSeconds();
   const ampm = hours >= 12 ? 'pm' : 'am';
   hours = hours % 12;
   hours = hours ? hours : 12;
   minutes = minutes < 10 ? '0' + minutes : minutes;
-  return hours + ':' + minutes + ' ' + ampm;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+  return `${hours}:${minutes}:${seconds} ${ampm}`;
 };
 
 /**
