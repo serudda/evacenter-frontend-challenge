@@ -39,7 +39,7 @@ const HistorySection: React.FC<Props> = ({ loading = false, list, className }) =
         </div>
       );
 
-    return <div className="rounded-lg bg-white shadow overflow-hidden">{renderItemList}</div>;
+    return <div className="rounded-lg bg-white overflow-auto overscroll-y-contain shadow h-96">{renderItemList}</div>;
   };
 
   return (

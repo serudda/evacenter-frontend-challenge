@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import * as appConstants from '@constants/appConstants';
 import { PreviewData } from '@interfaces/data';
+import { formatDate } from '@utils/utils';
 import useFileUpload, { UploadDataResponse } from '@hooks/useFileUpload';
 import useLazyApi, { RequestType } from '@hooks/useLazyApi';
 import useFirebase, { CreateResponse } from '@hooks/useFirebase';
@@ -85,7 +86,11 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
         </div>
 
         <div className="w-1/2">
-          <PreviewSection loading={uploading} imageUrl={fileData?.downloadUrl} />
+          <PreviewSection
+            loading={uploading}
+            imageUrl={fileData?.downloadUrl}
+            imageName={formatDate(fileData?.metaData.name)}
+          />
         </div>
       </div>
 

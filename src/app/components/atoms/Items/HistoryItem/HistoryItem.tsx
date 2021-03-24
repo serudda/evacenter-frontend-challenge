@@ -25,7 +25,7 @@ const HistoryItem: React.FC<Props> = ({ name, downloadUrl, className }) => {
   /*  CLASS ASSIGNMENT  */
   /*--------------------*/
   const historyItemClass = cn(
-    'history-item flex border-b border-gray-100 hover:bg-gray-50 cursor-pointer p-6',
+    'history-item flex border-b border-gray-100 hover:bg-gray-50 cursor-pointer pl-6 p-4',
     className,
   );
 

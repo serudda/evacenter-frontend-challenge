@@ -55,7 +55,9 @@ export const formatTime = (date: Date) => {
  * @return {string} parsed Date
  * (e.g. input -> 1611917520, output -> 'Jan 29 2021').
  */
-export const formatDate = (timestamp: number | string): string => {
+export const formatDate = (timestamp: number | string | undefined): string => {
+  if (!timestamp) return '';
+
   const parsedValue = isNaN(timestamp as number) ? parseInt(timestamp as string) : (timestamp as number);
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const date = new Date(parsedValue * 1000);
