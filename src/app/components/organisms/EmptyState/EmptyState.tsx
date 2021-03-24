@@ -28,9 +28,9 @@ const EmptyState: React.FC<Props> = ({
   return (
     <div className={emptyStateClass}>
       <div className="flex flex-col items-center text-center p-12 lg:p-20">
-        <Image className="mb-10" src={imgUrl} alt="No Result" noImg={<></>} />
+        <Image className="mb-10 w-40" src={imgUrl} alt="No Result" noImg={<></>} />
         <p className="text-medium-slate text-xl font-semi-bold mb-2">{title}</p>
-        <p className="text-lg font-regular max-w-lg mb-6">{description}</p>
+        <p className="text-lg font-regular max-w-lg">{description}</p>
       </div>
     </div>
   );

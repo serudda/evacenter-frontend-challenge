@@ -21,10 +21,10 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*  INIT VARIABLES  */
   /*------------------*/
   const { fetchData: fetchImage } = useLazyApi<File>(appConstants.IMAGE_URL as string, RequestType.blob);
-  const { create, getAll } = useFirebase('previews');
-  const [{ fileData }, , setFileToUpload] = useFileUpload('images/previews/');
+  const { create, getAll, loading: loadingHistory } = useFirebase('history');
+  const [{ fileData, loading: uploading }, , setFileToUpload] = useFileUpload('images/previews/');
   const [historyData, setHistoryData] = useState<Array<PreviewData>>([]);
-  const [loading, setLoading] = useState(true);
+  // const [loadingPreviewImage, setLoadingPreviewImage] = useState(true);
 
   const uploadFile = (fileData: File) => {
     setFileToUpload(fileData);
@@ -38,10 +38,9 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
     return await create(data);
   };
 
-  const getPreviews = async () => {
+  const getHistory = async () => {
     const previewData = await getAll();
     setHistoryData(previewData as Array<PreviewData>);
-    setLoading(false);
   };
 
   // Save data in Firebase after upload the preview images
@@ -49,14 +48,14 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
     if (fileData) {
       saveData(fileData).then(async (response) => {
         if (response !== CreateResponse.ok) return;
-        getPreviews();
+        getHistory();
       });
     }
   }, [fileData]);
 
-  // Get Preview data to build History list
+  // Build History list
   useEffect(() => {
-    getPreviews();
+    getHistory();
   }, []);
 
   /*--------------------*/
@@ -68,6 +67,7 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*          HANDLES         */
   /*--------------------------*/
   const handleTakePictureBtnClick = async () => {
+    // setLoadingPreviewImage(true);
     const imageData = await fetchImage();
     if (imageData) uploadFile(imageData);
   };
@@ -81,11 +81,11 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
 
       <div className="flex space-x-5">
         <div className="w-1/2">
-          <HistorySection list={historyData} loading={loading} />
+          <HistorySection list={historyData} loading={loadingHistory} />
         </div>
 
         <div className="w-1/2">
-          <PreviewSection />
+          <PreviewSection loading={uploading} imageUrl={fileData?.downloadUrl} />
         </div>
       </div>
 

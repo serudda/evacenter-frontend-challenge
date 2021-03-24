@@ -2,17 +2,16 @@
 import React from 'react';
 import cn from 'classnames';
 import Image from '@atoms/Image/Image';
+import PreviewSectionSkeleton from './PreviewSection.skeleton';
 /* -------------------- */
 
 type Props = {
+  readonly loading?: boolean;
+  readonly imageUrl?: string;
   readonly className?: string;
 };
 
-const PreviewSection: React.FC<Props> = ({ className }) => {
-  /*------------------*/
-  /*  INIT VARIABLES  */
-  /*------------------*/
-
+const PreviewSection: React.FC<Props> = ({ loading = false, imageUrl, className }) => {
   /*--------------------*/
   /*  CLASS ASSIGNMENT  */
   /*--------------------*/
@@ -21,17 +20,28 @@ const PreviewSection: React.FC<Props> = ({ className }) => {
   /*------------------*/
   /*    RENDER JSX    */
   /*------------------*/
+  const renderContent = (): JSX.Element => {
+    if (loading) return <PreviewSectionSkeleton />;
+    return (
+      <Image
+        src={imageUrl}
+        alt="No Preview Image"
+        noImg={
+          <div className="w-full h-96 relative">
+            <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+              <span className="text-blue-300 text-lg font-semi-bold">No Preview Image</span>
+            </div>
+          </div>
+        }
+      />
+    );
+  };
+
   return (
     <div className={previewSectionClass}>
       {/* HEADER */}
       <div className="text-lg font-semi-bold mb-2">Preview</div>
-      <div className="rounded-lg bg-blue-100 shadow overflow-hidden w-full">
-        <Image
-          src="https://firebasestorage.googleapis.com/v0/b/evacenter-fe-challenge.appspot.com/o/today.jpeg?alt=media&token=d81c859e-36ea-4c03-be11-cbd83a7370a9"
-          alt="No Result"
-          noImg={<></>}
-        />
-      </div>
+      <div className="rounded-lg bg-blue-50 shadow overflow-hidden w-full">{renderContent()}</div>
     </div>
   );
 };
