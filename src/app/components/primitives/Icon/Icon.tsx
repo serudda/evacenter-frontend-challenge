@@ -8,6 +8,7 @@ type IconType = {
   bars: () => JSX.Element;
   borderAll: () => JSX.Element;
   bullseyePointer: () => JSX.Element;
+  camera: () => JSX.Element;
   campground: () => JSX.Element;
   check: () => JSX.Element;
   checkCircle: () => JSX.Element;
@@ -59,6 +60,7 @@ export enum Catalog {
   borderAll = 'borderAll',
   bullseyePointer = 'bullseyePointer',
   campground = 'campground',
+  camera = 'camera',
   check = 'check',
   checkCircle = 'checkCircle',
   chevronDown = 'chevronDown',
@@ -494,6 +496,37 @@ const Icon: React.FC<Props> = ({
               onClick={onClick}
             >
               <path d="M11.764 11.382l-8.636 2.454a.69.69 0 00-.11 1.287L5.78 16.45l-3.595 3.595a.626.626 0 000 .886l.885.885a.626.626 0 00.885 0l3.596-3.595 1.326 2.76a.69.69 0 001.287-.11l2.455-8.636a.69.69 0 00-.854-.853zm1.65 2.772l-.838 2.949c2.575-.29 4.585-2.45 4.585-5.103 0-2.85-2.31-5.161-5.161-5.161-2.653 0-4.814 2.01-5.103 4.585l2.949-.838a2.577 2.577 0 113.568 3.568zM12 2C6.477 2 2 6.477 2 12c0 .338.018.672.05 1.002a1.96 1.96 0 01.726-.407l1.81-.514c-.001-.027-.005-.053-.005-.08 0-4.101 3.318-7.42 7.42-7.42 4.1 0 7.418 3.318 7.418 7.42 0 4.1-3.318 7.418-7.419 7.418-.027 0-.054-.003-.08-.004l-.515 1.81c-.08.28-.23.514-.405.725.329.032.663.05 1 .05 5.524 0 10-4.477 10-10S17.523 2 12 2z" />
+            </svg>
+          );
+
+        case Style.duotone:
+          return <span>{icon} does not have a duotone style</span>;
+
+        case Style.brand:
+          return <span>{icon} does not have a brand style</span>;
+      }
+    },
+
+    camera: () => {
+      switch (iconStyle) {
+        case Style.light:
+          return <span>{icon} does not have a light style</span>;
+
+        case Style.regular:
+          return <span>{icon} does not have a regular style</span>;
+
+        case Style.solid:
+          return (
+            <svg
+              className={className}
+              width={width}
+              height={height}
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              onClick={onClick}
+            >
+              <path d="M22 7.625v11.25c0 1.035-.84 1.875-1.875 1.875H3.875A1.875 1.875 0 012 18.875V7.625C2 6.59 2.84 5.75 3.875 5.75h3.438l.48-1.285A1.872 1.872 0 019.547 3.25h4.902c.781 0 1.48.484 1.754 1.215l.485 1.285h3.437C21.16 5.75 22 6.59 22 7.625zm-5.313 5.625A4.691 4.691 0 0012 8.562a4.691 4.691 0 00-4.688 4.688A4.691 4.691 0 0012 17.938a4.691 4.691 0 004.688-4.688zm-1.25 0A3.443 3.443 0 0112 16.688a3.443 3.443 0 01-3.438-3.438A3.443 3.443 0 0112 9.812a3.443 3.443 0 013.438 3.438z" />
             </svg>
           );
 

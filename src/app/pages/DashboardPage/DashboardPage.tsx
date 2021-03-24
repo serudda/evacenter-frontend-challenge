@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import * as appConstants from '@constants/appConstants';
-import { PreviewData, StatsData } from '@interfaces/data';
+import { PreviewData } from '@interfaces/data';
 import useFileUpload, { UploadDataResponse } from '@hooks/useFileUpload';
 import useLazyApi, { RequestType } from '@hooks/useLazyApi';
 import useFirebase, { CreateResponse } from '@hooks/useFirebase';
@@ -20,12 +20,11 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
-  const { fetchData: fetchStats } = useLazyApi<StatsData>(appConstants.DATA_URL as string);
-  const { fetchData: fetchImage, loading } = useLazyApi<File>(appConstants.IMAGE_URL as string, RequestType.blob);
+  const { fetchData: fetchImage } = useLazyApi<File>(appConstants.IMAGE_URL as string, RequestType.blob);
   const { create, getAll } = useFirebase('previews');
   const [{ fileData }, , setFileToUpload] = useFileUpload('images/previews/');
-  const [statsData, setStatsData] = useState<StatsData>();
-  const [previewData, setPreviewData] = useState<Array<PreviewData>>([]);
+  const [historyData, setHistoryData] = useState<Array<PreviewData>>([]);
+  const [loading, setLoading] = useState(true);
 
   const uploadFile = (fileData: File) => {
     setFileToUpload(fileData);
@@ -39,14 +38,10 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
     return await create(data);
   };
 
-  const getStats = async () => {
-    const statsData = await fetchStats();
-    setStatsData(statsData);
-  };
-
   const getPreviews = async () => {
     const previewData = await getAll();
-    setPreviewData(previewData as Array<PreviewData>);
+    setHistoryData(previewData as Array<PreviewData>);
+    setLoading(false);
   };
 
   // Save data in Firebase after upload the preview images
@@ -62,15 +57,6 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   // Get Preview data to build History list
   useEffect(() => {
     getPreviews();
-  }, []);
-
-  // Get Stats every 2 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (loading) return;
-      getStats();
-    }, 2000);
-    return () => clearInterval(interval);
   }, []);
 
   /*--------------------*/
@@ -91,11 +77,11 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*------------------*/
   return (
     <div className={dashboardPageClass}>
-      <StatsSection stats={statsData} className="mb-5" />
+      <StatsSection className="mb-5" />
 
       <div className="flex space-x-5">
         <div className="w-1/2">
-          <HistorySection list={previewData} />
+          <HistorySection list={historyData} loading={loading} />
         </div>
 
         <div className="w-1/2">

@@ -30,7 +30,7 @@ const FloatingMenu: React.FC<Props> = ({ className, onClick }) => {
   return (
     <div className={floatingMenuClass} onClick={handleClick}>
       <button className="trigger trigger--md trigger--primary shadow-lg">
-        <Icon className="icon" icon={IconCatalog.flame} width="40" height="40" iconStyle={IconStyle.duotone} />
+        <Icon className="icon" icon={IconCatalog.camera} width="40" height="40" iconStyle={IconStyle.solid} />
       </button>
     </div>
   );
