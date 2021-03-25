@@ -79,8 +79,9 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*          HANDLES         */
   /*--------------------------*/
   const handleTakePictureBtnClick = async () => {
+    const THIRTY_SECONDS = 30000;
     setPreviewImage(undefined);
-    const imageData = await fetchImage(30000);
+    const imageData = await fetchImage(THIRTY_SECONDS);
     if (imageData) uploadFile(imageData);
   };
 

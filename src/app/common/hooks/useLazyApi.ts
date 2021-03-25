@@ -1,7 +1,6 @@
 /* --- DEPENDENCIES --- */
 import { useState } from 'react';
-import * as Sentry from '@sentry/browser';
-import { isLocal } from '@config/config';
+import useErrorHandler from '@hooks/useErrorHandler';
 /* -------------------- */
 
 export enum RequestType {
@@ -21,29 +20,23 @@ const useLazyApi = <T>(url: string, type = RequestType.json): UseResponse<T> => 
   /*  INIT VARIABLES  */
   /*------------------*/
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | undefined>();
+  const { handleError, cleanError, error } = useErrorHandler();
 
   /*-----------------*/
   /*     METHODS     */
   /*-----------------*/
-  const _handleError = (err, location = ''): void => {
-    Sentry.captureException(err);
-    isLocal() && console.log(`Error ${location}:`, err);
-    setError(err);
-  };
-
   const fetchData = async (): Promise<T | undefined> => {
     setLoading(true);
-    setError(undefined);
+    cleanError();
 
     try {
       const response = await fetch(url);
-      if (!response.ok) _handleError(response.statusText, 'useLazyApi::fetchData::fetch(): ');
+      if (!response.ok) handleError(response.statusText, 'useLazyApi::fetchData::fetch(): ');
 
       const rawData: any = await response[type]();
       return rawData;
     } catch (err) {
-      _handleError(err.message, 'useLazyApi::fetchData::catch(): ');
+      handleError(err.message, 'useLazyApi::fetchData::catch(): ');
     } finally {
       setLoading(false);
     }
@@ -51,7 +44,7 @@ const useLazyApi = <T>(url: string, type = RequestType.json): UseResponse<T> => 
 
   const fetchDataWithTimeout = async (timeout = 10000): Promise<T | undefined> => {
     setLoading(true);
-    setError(undefined);
+    cleanError();
 
     try {
       const controller = new AbortController();
@@ -60,12 +53,12 @@ const useLazyApi = <T>(url: string, type = RequestType.json): UseResponse<T> => 
       const response = await fetch(url, { signal: controller.signal });
       clearTimeout(id);
 
-      if (!response.ok) _handleError(response.statusText, 'useLazyApi::fetchData::fetch(): ');
+      if (!response.ok) handleError(response.statusText, 'useLazyApi::fetchData::fetch(): ');
 
       const rawData: any = await response[type]();
       return rawData;
     } catch (err) {
-      _handleError(err.message, 'useLazyApi::fetchData::catch(): ');
+      handleError(err.message, 'useLazyApi::fetchData::catch(): ');
     } finally {
       setLoading(false);
     }
