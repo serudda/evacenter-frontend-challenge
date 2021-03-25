@@ -21,7 +21,7 @@ const useLazyApi = <T>(url: string, type = RequestType.json): UseResponse<T> => 
   /*  INIT VARIABLES  */
   /*------------------*/
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<string | undefined>();
 
   /*-----------------*/
   /*     METHODS     */
@@ -34,6 +34,7 @@ const useLazyApi = <T>(url: string, type = RequestType.json): UseResponse<T> => 
 
   const fetchData = async (): Promise<T | undefined> => {
     setLoading(true);
+    setError(undefined);
 
     try {
       const response = await fetch(url);
@@ -50,6 +51,7 @@ const useLazyApi = <T>(url: string, type = RequestType.json): UseResponse<T> => 
 
   const fetchDataWithTimeout = async (timeout = 10000): Promise<T | undefined> => {
     setLoading(true);
+    setError(undefined);
 
     try {
       const controller = new AbortController();

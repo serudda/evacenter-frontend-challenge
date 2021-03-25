@@ -5,15 +5,8 @@ import * as Sentry from '@sentry/browser';
 import { isLocal } from '@config/config';
 import { db } from '@config/firebase/firebaseConfig';
 /* -------------------- */
-
-export enum Status {
-  ok = 'OK',
-  error = 'ERROR',
-}
-
 export interface CreateResponse {
   data?: firebase.firestore.DocumentData;
-  status: Status;
 }
 
 interface UseResponse {
@@ -53,7 +46,7 @@ const useFirebase = (collection: string): UseResponse => {
       if (response.id) {
         const createdData = await response.get();
         if (!createdData.id) _handleError(response, 'useFirebase::create::response.get(): ');
-        if (createdData.id) return { status: Status.ok, data: { id: createdData.id, ...createdData.data() } };
+        if (createdData.id) return { data: { id: createdData.id, ...createdData.data() } };
       }
 
       _handleError(response, 'useFirebase::create::collection.add(): ');

@@ -6,7 +6,7 @@ import { PreviewData } from '@interfaces/data';
 import { formatDate } from '@utils/utils';
 import useFileUpload, { UploadDataResponse } from '@hooks/useFileUpload';
 import useLazyApi, { RequestType } from '@hooks/useLazyApi';
-import useFirebase, { Status as RequestStatus } from '@hooks/useFirebase';
+import useFirebase from '@hooks/useFirebase';
 import FloatingMenu from '@atoms/FloatingMenu/FloatingMenu';
 import Tooltip, {
   Color as TooltipColor,
@@ -33,7 +33,7 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   const { create, getAll, loading: loadingGetAllPreviews } = useFirebase('previews');
   const [{ fileData, loading: uploading }, , setFileToUpload] = useFileUpload('images/previews/');
   const [previewList, setPreviewList] = useState<Array<PreviewData>>([]);
-  const [previewImage, setPreviewImage] = useState<{ name: string; imageUrl: string }>();
+  const [previewImage, setPreviewImage] = useState<{ name: string; imageUrl: string } | undefined>();
   const [defaultSelectedItem, setDefaultSelectedItem] = useState<PreviewData>();
 
   const uploadFile = (fileData: File) => {
@@ -57,7 +57,7 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   useEffect(() => {
     if (fileData) {
       saveData(fileData).then(async (response) => {
-        if (response?.status !== RequestStatus.ok) return;
+        if (!response?.data) return;
         buildPreviewList();
         setPreviewImage({ name: fileData.metaData.name, imageUrl: fileData.downloadUrl });
         setDefaultSelectedItem(response.data as PreviewData);
@@ -79,6 +79,7 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*          HANDLES         */
   /*--------------------------*/
   const handleTakePictureBtnClick = async () => {
+    setPreviewImage(undefined);
     const imageData = await fetchImage(30000);
     if (imageData) uploadFile(imageData);
   };
