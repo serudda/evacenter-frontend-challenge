@@ -6,7 +6,7 @@ import { PreviewData } from '@interfaces/data';
 import { formatDate } from '@utils/utils';
 import useFileUpload, { UploadDataResponse } from '@hooks/useFileUpload';
 import useLazyApi, { RequestType } from '@hooks/useLazyApi';
-import useFirebase, { CreateResponse } from '@hooks/useFirebase';
+import useFirebase, { Status as RequestStatus } from '@hooks/useFirebase';
 import FloatingMenu from '@atoms/FloatingMenu/FloatingMenu';
 import HistorySection from './HistorySection/HistorySection';
 import PreviewSection from './PreviewSection/PreviewSection';
@@ -25,11 +25,11 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
     appConstants.IMAGE_URL as string,
     RequestType.blob,
   );
-  const { create, getAll, loading: loadingHistory } = useFirebase('history');
+  const { create, getAll, loading: loadingGetAllPreviews } = useFirebase('previews');
   const [{ fileData, loading: uploading }, , setFileToUpload] = useFileUpload('images/previews/');
-  const [historyData, setHistoryData] = useState<Array<PreviewData>>([]);
+  const [previewList, setPreviewList] = useState<Array<PreviewData>>([]);
   const [previewImage, setPreviewImage] = useState<{ name: string; imageUrl: string }>();
-  // const [defaultSelectedItem, setDefaultSelectedItem] = useState<PreviewData>();
+  const [defaultSelectedItem, setDefaultSelectedItem] = useState<PreviewData>();
 
   const uploadFile = (fileData: File) => {
     setFileToUpload(fileData);
@@ -43,25 +43,26 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
     return await create(data);
   };
 
-  const getHistory = async () => {
-    const previewData = await getAll();
-    setHistoryData(previewData as Array<PreviewData>);
+  const buildPreviewList = async () => {
+    const previewListData = await getAll();
+    setPreviewList(previewListData as Array<PreviewData>);
   };
 
   // Save data in Firebase after upload the preview images
   useEffect(() => {
     if (fileData) {
       saveData(fileData).then(async (response) => {
-        if (response !== CreateResponse.ok) return;
-        getHistory();
+        if (response.status !== RequestStatus.ok) return;
+        buildPreviewList();
         setPreviewImage({ name: fileData.metaData.name, imageUrl: fileData.downloadUrl });
+        setDefaultSelectedItem(response.data as PreviewData);
       });
     }
   }, [fileData]);
 
-  // Build History list
+  // Build Preview list
   useEffect(() => {
-    getHistory();
+    buildPreviewList();
   }, []);
 
   /*--------------------*/
@@ -90,7 +91,12 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
 
       <div className="flex space-x-5">
         <div className="w-1/2">
-          <HistorySection list={historyData} loading={loadingHistory} onSelectItem={handleSelectItem} />
+          <HistorySection
+            list={previewList}
+            loading={loadingGetAllPreviews}
+            onSelectItem={handleSelectItem}
+            defaultSelectedItem={defaultSelectedItem}
+          />
         </div>
 
         <div className="w-1/2">

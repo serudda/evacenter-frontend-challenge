@@ -1,5 +1,5 @@
 /* --- DEPENDENCIES --- */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { PreviewData } from '@interfaces/data';
 import { formatDate } from '@utils/utils';
@@ -16,11 +16,21 @@ type Props = {
   readonly onSelectItem?: (item: PreviewData) => void;
 };
 
-const HistorySection: React.FC<Props> = ({ defaultSelectedItem, list, loading = false, onSelectItem, className }) => {
+const HistorySection: React.FC<Props> = ({
+  defaultSelectedItem,
+  list = [],
+  loading = false,
+  onSelectItem,
+  className,
+}) => {
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
   const [selectedItem, setSelectedItem] = useState<PreviewData | undefined>(defaultSelectedItem);
+
+  useEffect(() => {
+    setSelectedItem(defaultSelectedItem);
+  }, [defaultSelectedItem]);
 
   /*--------------------*/
   /*  CLASS ASSIGNMENT  */
