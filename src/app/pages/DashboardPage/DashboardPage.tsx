@@ -21,11 +21,15 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
-  const { fetchData: fetchImage } = useLazyApi<File>(appConstants.IMAGE_URL as string, RequestType.blob);
+  const { fetchData: fetchImage, loading: loadingImage } = useLazyApi<File>(
+    appConstants.IMAGE_URL as string,
+    RequestType.blob,
+  );
   const { create, getAll, loading: loadingHistory } = useFirebase('history');
   const [{ fileData, loading: uploading }, , setFileToUpload] = useFileUpload('images/previews/');
   const [historyData, setHistoryData] = useState<Array<PreviewData>>([]);
   const [previewImage, setPreviewImage] = useState<{ name: string; imageUrl: string }>();
+  // const [defaultSelectedItem, setDefaultSelectedItem] = useState<PreviewData>();
 
   const uploadFile = (fileData: File) => {
     setFileToUpload(fileData);
@@ -98,7 +102,11 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
         </div>
       </div>
 
-      <FloatingMenu className="fixed bottom-0 right-0 mb-4 mr-4 lg:mb-8 lg:mr-8" onClick={handleTakePictureBtnClick} />
+      <FloatingMenu
+        className="fixed bottom-0 right-0 mb-4 mr-4 lg:mb-8 lg:mr-8"
+        onClick={handleTakePictureBtnClick}
+        loading={loadingImage}
+      />
     </div>
   );
 };

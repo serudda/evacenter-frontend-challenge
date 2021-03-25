@@ -9,17 +9,18 @@ import EmptyState from '@organisms/EmptyState/EmptyState';
 /* -------------------- */
 
 type Props = {
+  readonly defaultSelectedItem?: PreviewData;
   readonly list: Array<PreviewData>;
   readonly loading?: boolean;
   readonly className?: string;
   readonly onSelectItem?: (item: PreviewData) => void;
 };
 
-const HistorySection: React.FC<Props> = ({ loading = false, list, onSelectItem, className }) => {
+const HistorySection: React.FC<Props> = ({ defaultSelectedItem, list, loading = false, onSelectItem, className }) => {
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
-  const [selectedItem, setSelectedItem] = useState<PreviewData>();
+  const [selectedItem, setSelectedItem] = useState<PreviewData | undefined>(defaultSelectedItem);
 
   /*--------------------*/
   /*  CLASS ASSIGNMENT  */

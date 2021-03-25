@@ -50,7 +50,7 @@ const useFirebase = (collection: string): UseResponse => {
 
   const getAll = async (): Promise<Array<firebase.firestore.DocumentData>> => {
     setLoading(true);
-    const data = await db.collection(collection).get();
+    const data = await db.collection(collection).orderBy('created_at', 'desc').get();
     setLoading(false);
     return data.docs.map((doc) => {
       return {
