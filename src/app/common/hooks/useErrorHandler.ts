@@ -16,6 +16,9 @@ const useErrorHandler = (): UseResponse => {
   /*------------------*/
   const [error, setError] = useState<string>();
 
+  /*-----------------*/
+  /*     METHODS     */
+  /*-----------------*/
   const parseErrorMessage = (err: string) => {
     switch (err) {
       case 'Failed to fetch':
