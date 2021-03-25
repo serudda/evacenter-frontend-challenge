@@ -1,6 +1,7 @@
 /* --- DEPENDENCIES --- */
-import firebase from 'firebase/app';
 import { useState } from 'react';
+import firebase from 'firebase/app';
+import * as Sentry from '@sentry/browser';
 import { isLocal } from '@config/config';
 import { db } from '@config/firebase/firebaseConfig';
 /* -------------------- */
@@ -16,8 +17,8 @@ export interface CreateResponse {
 }
 
 interface UseResponse {
-  create: (data) => Promise<CreateResponse>;
-  getAll: () => Promise<Array<firebase.firestore.DocumentData>>;
+  create: (data) => Promise<CreateResponse | undefined>;
+  getAll: () => Promise<Array<firebase.firestore.DocumentData> | undefined>;
   loading: boolean;
   error?: string;
 }
@@ -27,16 +28,18 @@ const useFirebase = (collection: string): UseResponse => {
   /*  INIT VARIABLES  */
   /*------------------*/
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>();
 
   /*-----------------*/
   /*     METHODS     */
   /*-----------------*/
-  const _handleError = (error, location = ''): CreateResponse => {
-    isLocal() && console.log(`Error ${location}:`, error);
-    return { status: Status.error };
+  const _handleError = (err, location = '') => {
+    Sentry.captureException(err);
+    isLocal() && console.log(`Error ${location}:`, err);
+    setError(err);
   };
 
-  const create = async (data): Promise<CreateResponse> => {
+  const create = async (data): Promise<CreateResponse | undefined> => {
     setLoading(true);
 
     try {
@@ -49,32 +52,40 @@ const useFirebase = (collection: string): UseResponse => {
       const response = await db.collection(collection).add(dataSet);
       if (response.id) {
         const createdData = await response.get();
+        if (!createdData.id) _handleError(response, 'useFirebase::create::response.get(): ');
         if (createdData.id) return { status: Status.ok, data: { id: createdData.id, ...createdData.data() } };
-        return _handleError(response, 'useFirebase::create::response.get(): ');
       }
 
-      return _handleError(response, 'useFirebase::create::collection.add(): ');
-    } catch (error) {
-      return _handleError(error, 'useFirebase::create::catch(): ');
+      _handleError(response, 'useFirebase::create::collection.add(): ');
+    } catch (err) {
+      _handleError(err, 'useFirebase::create::catch(): ');
     } finally {
       setLoading(false);
     }
   };
 
-  const getAll = async (): Promise<Array<firebase.firestore.DocumentData>> => {
+  const getAll = async (): Promise<Array<firebase.firestore.DocumentData> | undefined> => {
     setLoading(true);
-    const data = await db.collection(collection).orderBy('created_at', 'desc').get();
-    setLoading(false);
-    return data.docs.map((doc) => {
-      return {
-        id: doc.id,
-        ...doc.data(),
-      };
-    });
+
+    try {
+      const data = await db.collection(collection).orderBy('created_at', 'desc').get();
+      if (!data) _handleError(data, 'useFirebase::getAll::try: ');
+
+      return data.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+    } catch (err) {
+      _handleError(err.message, 'useFirebase::getAll::catch(): ');
+    } finally {
+      setLoading(false);
+    }
   };
 
   /* RETURN VALUES */
-  return { create, getAll, loading };
+  return { create, getAll, loading, error };
 };
 
 export default useFirebase;

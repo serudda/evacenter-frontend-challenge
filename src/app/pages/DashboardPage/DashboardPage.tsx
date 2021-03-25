@@ -57,7 +57,7 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   useEffect(() => {
     if (fileData) {
       saveData(fileData).then(async (response) => {
-        if (response.status !== RequestStatus.ok) return;
+        if (response?.status !== RequestStatus.ok) return;
         buildPreviewList();
         setPreviewImage({ name: fileData.metaData.name, imageUrl: fileData.downloadUrl });
         setDefaultSelectedItem(response.data as PreviewData);

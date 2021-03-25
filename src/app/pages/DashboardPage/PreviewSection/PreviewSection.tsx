@@ -1,7 +1,6 @@
 /* --- DEPENDENCIES --- */
 import React, { useState } from 'react';
 import cn from 'classnames';
-import { isEmpty } from '@utils/utils';
 import Image from '@atoms/Image/Image';
 import PreviewSectionSkeleton from './PreviewSection.skeleton';
 /* -------------------- */

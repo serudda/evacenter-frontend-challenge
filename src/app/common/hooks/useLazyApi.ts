@@ -1,5 +1,6 @@
 /* --- DEPENDENCIES --- */
 import { useState } from 'react';
+import * as Sentry from '@sentry/browser';
 import { isLocal } from '@config/config';
 /* -------------------- */
 
@@ -20,12 +21,13 @@ const useLazyApi = <T>(url: string, type = RequestType.json): UseResponse<T> => 
   /*  INIT VARIABLES  */
   /*------------------*/
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>();
+  const [error, setError] = useState<string>();
 
   /*-----------------*/
   /*     METHODS     */
   /*-----------------*/
   const _handleError = (err, location = ''): void => {
+    Sentry.captureException(err);
     isLocal() && console.log(`Error ${location}:`, err);
     setError(err);
   };
