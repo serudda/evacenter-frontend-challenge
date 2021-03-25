@@ -30,6 +30,26 @@ export const formatBytes = (bytes = 0, decimals = 0): string => {
 };
 
 /**
+ * formatTime
+ * @description - return a parsed time format (AM/PM)
+ * @function
+ * @param {Date} date
+ * @return {string} parsed Time
+ * (e.g. input -> Tue Mar 23 2021 16:08:15 GMT-0500, output -> '4:08 PM').
+ */
+export const formatTime = (date: Date) => {
+  let hours = date.getHours();
+  let minutes: number | string = date.getMinutes();
+  let seconds: number | string = date.getSeconds();
+  const ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+  return `${hours}:${minutes}:${seconds} ${ampm}`;
+};
+
+/**
  * formatDate
  * @description - parse a Timestamp value into a String
  * @function
@@ -37,10 +57,13 @@ export const formatBytes = (bytes = 0, decimals = 0): string => {
  * @return {string} parsed Date
  * (e.g. input -> 1611917520, output -> 'Jan 29 2021').
  */
-export const formatDate = (timestamp: number): string => {
+export const formatDate = (timestamp: number | string | undefined): string => {
+  if (!timestamp) return '';
+
+  const parsedValue = isNaN(timestamp as number) ? parseInt(timestamp as string) : (timestamp as number);
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const date = new Date(timestamp * 1000);
-  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  const date = new Date(parsedValue * 1000);
+  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} • ${formatTime(date)}`;
 };
 
 /**

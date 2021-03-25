@@ -12,7 +12,7 @@ export interface StatsData {
 }
 
 export interface PreviewData {
-  uid: string;
+  id: string;
   name: string;
   imageUrl: string;
 }

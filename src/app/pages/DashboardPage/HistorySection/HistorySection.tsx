@@ -1,68 +1,84 @@
 /* --- DEPENDENCIES --- */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { PreviewData } from '@interfaces/data';
-import Icon, { Catalog as IconCatalog, Style as IconStyle } from '@primitives/Icon/Icon';
-import Tooltip, {
-  Color as TooltipColor,
-  Size as TooltipSize,
-  Placement as TooltipPlacement,
-} from '@atoms/Tooltip/Tooltip';
+import { formatDate } from '@utils/utils';
+import HistoryItem from '@atoms/Items/HistoryItem/HistoryItem';
+import HistorySectionSkeleton from './HistorySection.skeleton';
+import EmptyState from '@organisms/EmptyState/EmptyState';
 /* -------------------- */
 
 type Props = {
+  readonly defaultSelectedItem?: PreviewData;
   readonly list: Array<PreviewData>;
+  readonly loading?: boolean;
   readonly className?: string;
+  readonly onSelectItem?: (item: PreviewData) => void;
 };
 
-const HistorySection: React.FC<Props> = ({ list, className }) => {
+const HistorySection: React.FC<Props> = ({
+  defaultSelectedItem,
+  list = [],
+  loading = false,
+  onSelectItem,
+  className,
+}) => {
+  /*------------------*/
+  /*  INIT VARIABLES  */
+  /*------------------*/
+  const [selectedItem, setSelectedItem] = useState<PreviewData | undefined>(defaultSelectedItem);
+
+  useEffect(() => {
+    setSelectedItem(defaultSelectedItem);
+  }, [defaultSelectedItem]);
+
   /*--------------------*/
   /*  CLASS ASSIGNMENT  */
   /*--------------------*/
   const historySectionClass = cn('history-section', className);
 
+  /*---------------------*/
+  /*        HANDLES      */
+  /*---------------------*/
+  const handleItemClick = (item: PreviewData) => (): void => {
+    setSelectedItem(item);
+    if (onSelectItem) onSelectItem(item);
+  };
+
   /*------------------*/
   /*    RENDER JSX    */
   /*------------------*/
   const renderItemList = list.map((item) => (
-    <div key={item.uid} className="flex border-b border-gray-100 hover:bg-gray-50 cursor-pointer p-6">
-      <div className="text-base text-gray-400 block overflow-hidden truncate self-center">{item.name}</div>
-      <div className="flex items-center ml-auto space-x-3">
-        <Tooltip text="Download" color={TooltipColor.black} placement={TooltipPlacement.top} size={TooltipSize.sm}>
-          <a
-            className="p-1 rounded-md hover:bg-indigo-50 cursor-pointer"
-            href={item.imageUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Icon
-              className="text-gray-500"
-              icon={IconCatalog.arrowToBottom}
-              iconStyle={IconStyle.regular}
-              width="20"
-              height="20"
-            />
-          </a>
-        </Tooltip>
+    <HistoryItem
+      key={item.id}
+      id={item.id}
+      name={formatDate(item.name)}
+      downloadUrl={item.imageUrl}
+      onClick={handleItemClick(item)}
+      isActive={selectedItem?.id === item.id}
+    />
+  ));
 
-        <div className="p-1 rounded-md">
-          <Icon
-            className="text-gray-500"
-            icon={IconCatalog.chevronRight}
-            iconStyle={IconStyle.regular}
-            width="24"
-            height="24"
+  const renderContent = (): JSX.Element => {
+    if (loading) return <HistorySectionSkeleton />;
+    if (list.length === 0)
+      return (
+        <div className="rounded-lg bg-white shadow overflow-hidden">
+          <EmptyState
+            title="No data yet"
+            description="See our road map and vote for the features and components you would like to see"
           />
         </div>
-      </div>
-    </div>
-  ));
+      );
+
+    return <div className="rounded-lg bg-white overflow-auto overscroll-y-contain shadow h-96">{renderItemList}</div>;
+  };
 
   return (
     <div className={historySectionClass}>
       {/* HEADER */}
       <div className="text-lg font-semi-bold mb-2">History</div>
-      <div className="rounded-lg bg-white shadow overflow-hidden">{renderItemList}</div>
+      {renderContent()}
     </div>
   );
 };
