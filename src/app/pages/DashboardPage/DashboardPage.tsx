@@ -26,7 +26,7 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
-  const testId = 'Navbar';
+  const testId = 'DashboardPage';
   const { fetchDataWithTimeout: fetchImage, loading: loadingImage, error: errorFetchImage } = useLazyApi<File>(
     appConstants.IMAGE_URL as string,
     RequestType.blob,

@@ -1,15 +1,14 @@
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import Tooltip from './Tooltip';
 
 describe('<Tooltip/>', () => {
   test('renders Tooltip component', async () => {
-    const { getByTestId } = render(
+    const { findByTestId } = render(
       <Tooltip text="tooltip">
         <div>Test</div>
       </Tooltip>,
     );
-    await waitFor(() => {
-      expect(getByTestId('Tooltip')).toBeInTheDocument();
-    });
+    const tooltip = await findByTestId('Tooltip');
+    expect(tooltip).toBeInTheDocument();
   });
 });
