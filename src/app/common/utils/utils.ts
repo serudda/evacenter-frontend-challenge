@@ -19,7 +19,7 @@ export const hasProp = (obj = {}, prop: string): boolean => {
  * @return {string} parsed Time
  * (e.g. input -> Tue Mar 23 2021 16:08:15 GMT-0500, output -> '4:08 PM').
  */
-export const formatTime = (date: Date) => {
+export const formatTime = (date: Date): string => {
   let hours = date.getHours();
   let minutes: number | string = date.getMinutes();
   let seconds: number | string = date.getSeconds();
@@ -55,16 +55,16 @@ export const formatDate = (timestamp: number | string | undefined): string => {
  * @param {any} element - Element to validate
  * @return {boolean} Element is an Array or not.
  */
-export const isArray = (element): boolean => Array.isArray(element);
+export const isArray = (element: any): boolean => Array.isArray(element);
 
 /**
  * isEmpty
  * @description - validate if an variable (string, string, array) is Empty
  * @function
- * @param {Object} value - Value to validate
+ * @param {any} value - Value to validate
  * @return {boolean} Value is empty or not.
  */
-export const isEmpty = (value): boolean => Object.keys(value).length === 0;
+export const isEmpty = (value: any): boolean => Object.keys(value).length === 0;
 
 /**
  * isNullOrUndefined
@@ -73,4 +73,4 @@ export const isEmpty = (value): boolean => Object.keys(value).length === 0;
  * @param {any} value - Element to validate
  * @return {boolean} Element is null or undefined.
  */
-export const isNullOrUndefined = (value): boolean => value === undefined || value === null;
+export const isNullOrUndefined = (value: any): boolean => value === undefined || value === null;
