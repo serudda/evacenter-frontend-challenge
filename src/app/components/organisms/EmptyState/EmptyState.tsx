@@ -17,6 +17,11 @@ const EmptyState: React.FC<Props> = ({
   imgUrl = '/assets/images/illustrations/desert.svg',
   className,
 }) => {
+  /*------------------*/
+  /*  INIT VARIABLES  */
+  /*------------------*/
+  const testId = 'EmptyState';
+
   /*--------------------*/
   /*  CLASS ASSIGNMENT  */
   /*--------------------*/
@@ -26,7 +31,7 @@ const EmptyState: React.FC<Props> = ({
   /*    RENDER JSX    */
   /*------------------*/
   return (
-    <div className={emptyStateClass}>
+    <div data-testid={testId} className={emptyStateClass}>
       <div className="flex flex-col items-center text-center p-12 lg:p-20">
         <Image className="mb-10 w-40" src={imgUrl} alt="No Result" noImg={<></>} />
         <p className="text-medium-slate text-xl font-semi-bold mb-2">{title}</p>

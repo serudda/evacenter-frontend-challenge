@@ -23,6 +23,7 @@ const PreviewSection: React.FC<Props> = ({
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
+  const testId = 'PreviewSection';
   const [showCaption, setShowCaption] = useState(false);
 
   const handleNoImage = (): JSX.Element => {
@@ -73,7 +74,7 @@ const PreviewSection: React.FC<Props> = ({
   };
 
   return (
-    <div className={previewSectionClass}>
+    <div data-testid={testId} className={previewSectionClass}>
       {/* HEADER */}
       <div className="text-lg font-semi-bold mb-2">Preview</div>
       <div className="relative rounded-lg bg-blue-50 shadow overflow-hidden w-full">

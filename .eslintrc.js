@@ -14,7 +14,9 @@ module.exports = {
     },
   },
   rules: {
+    '@typescript-eslint/explicit-module-boundary-types': ['warn', { allowArgumentsExplicitlyTypedAsAny: true }],
     '@typescript-eslint/no-useless-computed-key': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
     'react/prop-types': 'off',
     'react/display-name': 'off',

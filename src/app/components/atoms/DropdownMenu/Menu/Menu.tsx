@@ -19,6 +19,11 @@ type Props = {
 
 const Menu: React.FC<Props> = ({ isOpen = false, placement = Placement.bottomLeft, className, children }) => {
   /*------------------*/
+  /*  INIT VARIABLES  */
+  /*------------------*/
+  const testId = 'DropdownMenu';
+
+  /*------------------*/
   /* CLASS ASSIGNMENT */
   /*------------------*/
   const menuClass = cn(className, 'ec-menu', {
@@ -29,7 +34,13 @@ const Menu: React.FC<Props> = ({ isOpen = false, placement = Placement.bottomLef
   /*    RENDER JSX    */
   /*------------------*/
   return isOpen ? (
-    <div className={menuClass} role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+    <div
+      data-testid={testId}
+      className={menuClass}
+      role="menu"
+      aria-orientation="vertical"
+      aria-labelledby="options-menu"
+    >
       {children}
     </div>
   ) : null;

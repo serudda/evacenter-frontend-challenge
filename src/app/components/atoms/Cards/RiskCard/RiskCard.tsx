@@ -25,6 +25,11 @@ type Props = {
 
 const RiskCard: React.FC<Props> = ({ type, className }) => {
   /*------------------*/
+  /*  INIT VARIABLES  */
+  /*------------------*/
+  const testId = 'RiskCard';
+
+  /*------------------*/
   /* CLASS ASSIGNMENT */
   /*------------------*/
   const riskCardClass = cn(className, 'ec-risk-card flex flex-col p-6 space-y-2 w-full border rounded-lg', {
@@ -35,7 +40,7 @@ const RiskCard: React.FC<Props> = ({ type, className }) => {
   /*    RENDER JSX    */
   /*------------------*/
   return (
-    <div className={riskCardClass}>
+    <div data-testid={testId} className={riskCardClass}>
       <span className="title font-regular text-sm">Risk</span>
       <span className="font-bold text-3xl">{Title[type]}</span>
     </div>

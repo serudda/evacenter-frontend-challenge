@@ -26,6 +26,7 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
+  const testId = 'DashboardPage';
   const { fetchDataWithTimeout: fetchImage, loading: loadingImage, error: errorFetchImage } = useLazyApi<File>(
     appConstants.IMAGE_URL as string,
     RequestType.blob,
@@ -93,7 +94,7 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
   /*    RENDER JSX    */
   /*------------------*/
   return (
-    <div className={dashboardPageClass}>
+    <div data-testid={testId} className={dashboardPageClass}>
       <StatsSection className="mb-5" />
 
       <div className="flex space-x-5">

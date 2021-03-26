@@ -13,7 +13,7 @@ type Props = {
   readonly id: string;
   readonly name: string;
   readonly downloadUrl: string;
-  readonly isActive: boolean;
+  readonly isActive?: boolean;
   readonly className?: string;
   readonly onClick?: (id: string) => void;
 };
@@ -22,6 +22,7 @@ const HistoryItem: React.FC<Props> = ({ id, name, downloadUrl, isActive = false,
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
+  const testId = 'HistoryItem';
   const [showDownloadButton, setShowDownloadButton] = useState(false);
 
   /*--------------------*/
@@ -50,6 +51,7 @@ const HistoryItem: React.FC<Props> = ({ id, name, downloadUrl, isActive = false,
   /*------------------*/
   return (
     <div
+      data-testid={testId}
       className={historyItemClass}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
