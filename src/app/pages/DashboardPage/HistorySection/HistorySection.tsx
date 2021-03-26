@@ -26,6 +26,7 @@ const HistorySection: React.FC<Props> = ({
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
+  const testId = 'HistorySection';
   const [selectedItem, setSelectedItem] = useState<PreviewData | undefined>(defaultSelectedItem);
 
   useEffect(() => {
@@ -75,7 +76,7 @@ const HistorySection: React.FC<Props> = ({
   };
 
   return (
-    <div className={historySectionClass}>
+    <div data-testid={testId} className={historySectionClass}>
       {/* HEADER */}
       <div className="text-lg font-semi-bold mb-2">History</div>
       {renderContent()}

@@ -7,10 +7,15 @@ import DashboardPage from '@pages/DashboardPage/DashboardPage';
 
 const App: React.FC = () => {
   /*------------------*/
+  /*  INIT VARIABLES  */
+  /*------------------*/
+  const testId = 'App';
+
+  /*------------------*/
   /*    RENDER JSX    */
   /*------------------*/
   return (
-    <div className="App">
+    <div data-testid={testId} className="App">
       <Navbar />
       <Switch>
         <Route path="/" exact>

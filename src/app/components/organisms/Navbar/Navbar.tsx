@@ -2,7 +2,6 @@
 import React from 'react';
 import cn from 'classnames';
 import Icon, { Catalog as IconCatalog, Style as IconStyle } from '@primitives/Icon/Icon';
-import Logo, { Color as LogoColor, Size as LogoSize, Type as LogoType } from '@primitives/Logo/Logo';
 import Avatar, { Size as AvatarSize } from '@atoms/Avatar/Avatar';
 import { Item, Menu, DropdownMenu } from '@atoms/DropdownMenu';
 import './Navbar.css';
@@ -13,6 +12,11 @@ type Props = {
 };
 
 const Navbar: React.FC<Props> = ({ className }) => {
+  /*------------------*/
+  /*  INIT VARIABLES  */
+  /*------------------*/
+  const testId = 'Navbar';
+
   /*--------------------*/
   /*  CLASS ASSIGNMENT  */
   /*--------------------*/
@@ -28,14 +32,10 @@ const Navbar: React.FC<Props> = ({ className }) => {
   /*    RENDER JSX    */
   /*------------------*/
   return (
-    <nav className={NavbarClass}>
+    <nav data-testid={testId} className={NavbarClass}>
       {/* DESKTOP */}
       <div className="max-w-7xl mx-auto px-6 hidden md:flex">
         <div className="relative flex-1 flex items-center justify-between h-16">
-          <div className="flex-shrink-0 flex items-center flex-1">
-            <Logo className="block" size={LogoSize.md} color={LogoColor.default} type={LogoType.complete}></Logo>
-          </div>
-
           {/* NAVBAR OPTIONS  */}
           <div className="navbar-options flex items-center ml-auto">
             <DropdownMenu className="border-l border-default-smoke ml-3">

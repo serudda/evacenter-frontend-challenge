@@ -29,6 +29,11 @@ const Avatar: React.FC<Props> = ({
   className,
 }) => {
   /*------------------*/
+  /*  INIT VARIABLES  */
+  /*------------------*/
+  const testId = 'Avatar';
+
+  /*------------------*/
   /* CLASS ASSIGNMENT */
   /*------------------*/
   const avatarClass = cn(className, 'ec-avatar', {
@@ -39,7 +44,7 @@ const Avatar: React.FC<Props> = ({
   /*    RENDER JSX    */
   /*------------------*/
   return (
-    <div className={avatarClass}>
+    <div data-testid={testId} className={avatarClass}>
       <Image className="image" src={imgUrl} alt={altText} noImg={<></>} />
     </div>
   );

@@ -13,6 +13,11 @@ type Props = {
 
 const FloatingMenu: React.FC<Props> = ({ loading = false, className, onClick }) => {
   /*------------------*/
+  /*  INIT VARIABLES  */
+  /*------------------*/
+  const testId = 'FloatingMenu';
+
+  /*------------------*/
   /* CLASS ASSIGNMENT */
   /*------------------*/
   const floatingMenuClass = cn(className, 'ec-floating-menu z-20');
@@ -29,7 +34,7 @@ const FloatingMenu: React.FC<Props> = ({ loading = false, className, onClick }) 
   /*    RENDER JSX    */
   /*------------------*/
   return (
-    <div className={floatingMenuClass} onClick={handleClick}>
+    <div data-testid={testId} className={floatingMenuClass} onClick={handleClick}>
       <button className="trigger trigger--md trigger--primary shadow-lg">
         {loading ? (
           <svg

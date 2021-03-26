@@ -16,6 +16,7 @@ const Stat: React.FC<Props> = ({ value = '-', description, icon = IconCatalog.wi
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
+  const testId = 'Stat';
 
   /*------------------*/
   /* CLASS ASSIGNMENT */
@@ -30,7 +31,7 @@ const Stat: React.FC<Props> = ({ value = '-', description, icon = IconCatalog.wi
   /*    RENDER JSX    */
   /*------------------*/
   return (
-    <div className={statClass}>
+    <div data-testid={testId} className={statClass}>
       <div className="flex flex-col space-y-2">
         <span className="text-gray-400 font-regular text-sm">{description}</span>
         <span className="text-gray-600 font-bold text-3xl">{value}</span>

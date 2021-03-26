@@ -17,6 +17,7 @@ const StatsSection: React.FC<Props> = ({ className }) => {
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
+  const testId = 'StatsSection';
   const { fetchData: fetchStats, loading } = useLazyApi<StatsData>(appConstants.DATA_URL as string);
   const [statsData, setStatsData] = useState<StatsData>();
   const assignRiskLevel = (value) => {
@@ -55,7 +56,7 @@ const StatsSection: React.FC<Props> = ({ className }) => {
   /*    RENDER JSX    */
   /*------------------*/
   return (
-    <div className={statsSectionClass}>
+    <div data-testid={testId} className={statsSectionClass}>
       <div className="w-3/4">
         <div className="flex rounded-lg bg-white shadow overflow-hidden">
           <Stat

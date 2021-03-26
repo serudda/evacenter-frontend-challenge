@@ -15,6 +15,7 @@ const DropdownMenu: React.FC<Props> = ({ className, onTriggerClick, children }) 
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
+  const testId = 'DropdownMenu';
   const node = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   useOnClickOutside(node, () => setIsOpen(false));
@@ -48,7 +49,7 @@ const DropdownMenu: React.FC<Props> = ({ className, onTriggerClick, children }) 
   /*    RENDER JSX    */
   /*------------------*/
   return (
-    <div ref={node} className={DropdownMenuClass}>
+    <div data-testid={testId} ref={node} className={DropdownMenuClass}>
       {renderChildren}
     </div>
   );

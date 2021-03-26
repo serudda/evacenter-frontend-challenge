@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import FloatingMenu from './FloatingMenu';
 
 describe('<FloatingMenu/>', () => {

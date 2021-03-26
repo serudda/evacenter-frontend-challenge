@@ -1,9 +1,9 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import Navbar from './Navbar';
 
-test('renders learn react link', () => {
-  render(<Navbar />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('<Navbar/>', () => {
+  test('renders Navbar component', () => {
+    const { getByTestId } = render(<Navbar />);
+    expect(getByTestId('Navbar')).toBeInTheDocument();
+  });
 });

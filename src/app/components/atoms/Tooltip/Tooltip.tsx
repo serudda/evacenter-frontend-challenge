@@ -51,6 +51,7 @@ const Tooltip: React.FC<Props> = ({
   /*------------------*/
   /*  INIT VARIABLES  */
   /*------------------*/
+  const testId = 'Tooltip';
   const [tooltipElement, setTooltipElement] = useState<HTMLSpanElement | null>(null);
   const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
   const refTriggerNode = useRef<HTMLSpanElement>(null);
@@ -98,6 +99,7 @@ const Tooltip: React.FC<Props> = ({
       {elements}
       <Portal>
         <div
+          data-testid={testId}
           className={tooltipContainerClass}
           ref={setTooltipElement}
           style={{ ...styles.popper }}
