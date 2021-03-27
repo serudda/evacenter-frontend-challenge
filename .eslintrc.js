@@ -20,6 +20,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
     'react/prop-types': 'off',
     'react/display-name': 'off',
+    'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/camelcase': 'off',
   },
