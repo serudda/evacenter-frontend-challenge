@@ -27,6 +27,11 @@ Create an application to handle controls for the camera. Take a picture from the
 
 ---
 
+## Mockup
+
+![Thermal Camera Dashboard](https://user-images.githubusercontent.com/10075532/112707674-0b802080-8e7b-11eb-81ff-6fda3932865f.jpeg)
+
+
 ## General Access
 
 ### Roadmap
