@@ -1,25 +1,30 @@
+/* --- DEPENDENCIES --- */
 import React from 'react';
-import logo from '@src/logo.svg';
+import { Switch, Redirect, Route } from 'react-router-dom';
+import Navbar from '@organisms/Navbar/Navbar';
+import DashboardPage from '@pages/DashboardPage/DashboardPage';
+/* -------------------- */
 
-function App() {
+const App: React.FC = () => {
+  /*------------------*/
+  /*  INIT VARIABLES  */
+  /*------------------*/
+  const testId = 'App';
+
+  /*------------------*/
+  /*    RENDER JSX    */
+  /*------------------*/
   return (
-    <div className="App bg-gray-600 text-5xl">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div data-testid={testId} className="App">
+      <Navbar />
+      <Switch>
+        <Route path="/" exact>
+          <Redirect to="/dashboard" />
+        </Route>
+        <Route path="/dashboard" component={DashboardPage} exact />
+      </Switch>
     </div>
   );
-}
+};
 
 export default App;

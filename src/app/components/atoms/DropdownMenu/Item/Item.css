@@ -1,0 +1,19 @@
+.ec-item {
+  display: flex;
+  color: theme('colors.black');
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+  user-select: none;
+
+  &:hover {
+    background-color: theme('colors.gray.100');
+  }
+
+  &--disabled {
+    pointer-events: none;
+    opacity: 0.25;
+  }
+}

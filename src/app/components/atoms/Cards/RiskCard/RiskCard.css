@@ -1,0 +1,37 @@
+.ec-risk-card {
+  &--default {
+    background-color: theme('colors.gray.200');
+    border-color: theme('colors.gray.400');
+
+    .title {
+      color: theme('colors.gray.800');
+    }
+  }
+
+  &--positive {
+    background-color: theme('colors.green.100');
+    border-color: theme('colors.green.200');
+
+    .title {
+      color: theme('colors.green.800');
+    }
+  }
+
+  &--warning {
+    background-color: theme('colors.yellow.100');
+    border-color: theme('colors.yellow.200');
+
+    .title {
+      color: theme('colors.yellow.800');
+    }
+  }
+
+  &--negative {
+    background-color: theme('colors.red.100');
+    border-color: theme('colors.red.200');
+
+    .title {
+      color: theme('colors.red.800');
+    }
+  }
+}

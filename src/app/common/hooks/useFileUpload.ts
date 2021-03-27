@@ -1,8 +1,9 @@
+/* --- DEPENDENCIES --- */
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import firebase from 'firebase';
-
 import { isLocal } from '@config/config';
 import { storageRef } from '@config/firebase/firebaseConfig';
+/* -------------------- */
 
 export interface UploadDataResponse {
   metaData: firebase.storage.FullMetadata;
@@ -18,7 +19,7 @@ export enum DeleteResponse {
 type UseFileUploadResponse = [
   {
     fileData: UploadDataResponse | undefined;
-    isLoading: boolean;
+    loading: boolean;
     isError: boolean;
     progress: number;
   },
@@ -29,19 +30,19 @@ type UseFileUploadResponse = [
 const useFileUpload = (imageFolder: string): UseFileUploadResponse => {
   const [fileData, setFileData] = useState<UploadDataResponse | undefined>();
   const [fileToUpload, setFileToUpload] = useState<File>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
 
   useEffect(() => {
     const uploadData = async (): Promise<void> => {
       setIsError(false);
-      setIsLoading(true);
+      setLoading(true);
       setProgress(0);
       if (!fileToUpload) return;
 
       try {
-        const fName = `${new Date().getTime()}-${fileToUpload.name}`;
+        const fName = `${Math.floor(Date.now() / 1000)}`;
         const ref = storageRef.child(imageFolder + fName);
         const uploadTask = ref.put(fileToUpload);
 
@@ -53,13 +54,13 @@ const useFileUpload = (imageFolder: string): UseFileUploadResponse => {
             setProgress(value);
           },
           (error) => {
-            setIsLoading(false);
+            setLoading(false);
             isLocal() && console.log('Error Uploading File: ', error);
             setIsError(true);
           },
           async () => {
             setIsError(false);
-            setIsLoading(false);
+            setLoading(false);
 
             const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
 
@@ -72,7 +73,7 @@ const useFileUpload = (imageFolder: string): UseFileUploadResponse => {
           },
         );
       } catch (error) {
-        setIsLoading(false);
+        setLoading(false);
         isLocal() && console.log('Error Uploading File: ', error);
         setIsError(true);
       }
@@ -103,7 +104,7 @@ const useFileUpload = (imageFolder: string): UseFileUploadResponse => {
     return DeleteResponse.noFile;
   };
 
-  return [{ fileData, isLoading, isError, progress }, handleDeleteFile, setFileToUpload];
+  return [{ fileData, loading, isError, progress }, handleDeleteFile, setFileToUpload];
 };
 
 export default useFileUpload;

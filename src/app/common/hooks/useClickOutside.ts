@@ -1,7 +1,7 @@
 // Dependencies
 import { useCallback, useEffect } from 'react';
 
-const useOnClickOutside = (ref, handler): void => {
+const useOnClickOutside = (ref: React.MutableRefObject<any>, handler: (event) => void): void => {
   const listener = useCallback(
     (event) => {
       if (!ref.current || ref.current.contains(event.target)) return;
