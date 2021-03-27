@@ -1,5 +1,13 @@
 # Eva Center Frontend Challenge
 
+Web application that permits doctors to operate a thermal camera.
+
+## Description
+
+Create an application to handle controls for the camera. Take a picture from the thermographic camera. This app will store and show previews of the images taken. Doctors want to see the ambient temperature, the patient temperature and if there's an indicator of risk
+
+---
+
 ## Requirements
 
 1. Must be responsive. Doctors use the application from their laptop or phone.
@@ -17,9 +25,13 @@
 11. Must take image previews and store the timestamp.
 12. Must permit image previews to be downloaded and use the timestamp in the filename.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Environment
+## General Access
+
+### Roadmap
+
+https://github.com/sruda/evacenter-frontend-challenge/projects/1
 
 ### Prd Environment
 
@@ -30,6 +42,8 @@ https://evacenter-fe-challenge.netlify.app/
 evacenter-fe-challenge
 
 (antonio.torres@evacenter.com has access to this project on Firebase)
+
+---
 
 ## Available Scripts
 
