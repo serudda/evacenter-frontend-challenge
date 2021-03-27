@@ -65,10 +65,7 @@ const HistorySection: React.FC<Props> = ({
     if (list.length === 0)
       return (
         <div className="rounded-lg bg-white shadow overflow-hidden">
-          <EmptyState
-            title="No data yet"
-            description="See our road map and vote for the features and components you would like to see"
-          />
+          <EmptyState title="No data yet" description="You haven't taken any pictures yet" />
         </div>
       );
 
