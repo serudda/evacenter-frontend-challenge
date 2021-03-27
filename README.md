@@ -19,11 +19,17 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## General access
+## Environment
 
-Prd Environment
+### Prd Environment
 
 https://evacenter-fe-challenge.netlify.app/
+
+### Firebase (Firestore and Storage)
+
+evacenter-fe-challenge
+
+(antonio.torres@evacenter.com has access to this project on Firebase)
 
 ## Available Scripts
 
