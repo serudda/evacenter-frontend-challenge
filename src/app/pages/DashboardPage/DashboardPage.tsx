@@ -114,18 +114,19 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
             imageName={formatDate(previewImage?.name)}
             error={errorFetchImage}
           />
-          <Tooltip
-            text="Take new picture"
-            color={TooltipColor.black}
-            placement={TooltipPlacement.top}
-            size={TooltipSize.sm}
-          >
-            <div className="absolute bottom-0 right-0 mb-4 mr-4">
-              <FloatingMenu onClick={handleTakePictureBtnClick} loading={loadingImage} />
-            </div>
-          </Tooltip>
         </div>
       </div>
+
+      <Tooltip
+        text="Take new picture"
+        color={TooltipColor.black}
+        placement={TooltipPlacement.left}
+        size={TooltipSize.sm}
+      >
+        <div className="fixed bottom-0 right-0 mb-4 mr-4">
+          <FloatingMenu onClick={handleTakePictureBtnClick} loading={loadingImage} />
+        </div>
+      </Tooltip>
     </div>
   );
 };
