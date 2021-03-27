@@ -97,8 +97,8 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
     <div data-testid={testId} className={dashboardPageClass}>
       <StatsSection className="mb-5" />
 
-      <div className="flex space-x-5">
-        <div className="w-1/2">
+      <div className="flex flex-col md:flex-row">
+        <div className="w-full md:w-1/2 mr-0 mb-5 md:mr-5 md:mb-0">
           <HistorySection
             list={previewList}
             loading={loadingGetAllPreviews}
@@ -107,7 +107,7 @@ const DashboardPage: React.FC<Props> = ({ className }) => {
           />
         </div>
 
-        <div className="w-1/2 relative">
+        <div className="w-full md:w-1/2 relative">
           <PreviewSection
             loading={uploading}
             imageUrl={previewImage?.imageUrl}

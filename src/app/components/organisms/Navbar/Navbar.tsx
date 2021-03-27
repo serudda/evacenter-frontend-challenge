@@ -24,17 +24,13 @@ const Navbar: React.FC<Props> = ({ className }) => {
     'bg-white border-b border-extra-dark-snow': true,
   });
 
-  /*--------------------*/
-  /*       HANDLES      */
-  /*--------------------*/
-
   /*------------------*/
   /*    RENDER JSX    */
   /*------------------*/
   return (
     <nav data-testid={testId} className={NavbarClass}>
       {/* DESKTOP */}
-      <div className="max-w-7xl mx-auto px-6 hidden md:flex">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="relative flex-1 flex items-center justify-between h-16">
           {/* NAVBAR OPTIONS  */}
           <div className="navbar-options flex items-center ml-auto">

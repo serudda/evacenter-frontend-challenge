@@ -50,23 +50,23 @@ const StatsSection: React.FC<Props> = ({ className }) => {
   /*--------------------*/
   /*  CLASS ASSIGNMENT  */
   /*--------------------*/
-  const statsSectionClass = cn('stats-section flex space-x-5', className);
+  const statsSectionClass = cn('stats-section flex flex-col md:flex-row', className);
 
   /*------------------*/
   /*    RENDER JSX    */
   /*------------------*/
   return (
     <div data-testid={testId} className={statsSectionClass}>
-      <div className="w-3/4">
-        <div className="flex rounded-lg bg-white shadow overflow-hidden">
+      <div className="w-full md:w-3/4 mr-0 md:mr-5 mb-5 md:mb-0">
+        <div className="flex flex-col md:flex-row rounded-lg bg-white shadow overflow-hidden w-full">
           <Stat
-            className="border-r border-gray-100 w-full"
+            className="border-b md:border-r border-gray-100 w-full"
             value={statsData?.ambientTemperture}
             description="Ambient Temperature"
             icon={IconCatalog.wind}
           />
           <Stat
-            className="border-r border-gray-100 w-full"
+            className="border-b md:border-r border-gray-100 w-full"
             value={statsData?.exteriorTemperature}
             description="Exterior Temperature"
             icon={IconCatalog.campground}
@@ -79,7 +79,7 @@ const StatsSection: React.FC<Props> = ({ className }) => {
           />
         </div>
       </div>
-      <div className="w-1/4">
+      <div className="w-full md:w-1/4">
         <RiskCard type={assignRiskLevel(statsData?.risk)} />
       </div>
     </div>
