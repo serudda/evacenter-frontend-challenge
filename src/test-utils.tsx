@@ -5,7 +5,8 @@ const AllTheProviders = ({ children }): JSX.Element => {
   return <BrowserRouter>{children}</BrowserRouter>;
 };
 
-const customRender = (ui, options?): any => render(ui, { wrapper: AllTheProviders, ...options });
+const customRender = (ui: React.ReactElement, options?: any): any =>
+  render(ui, { wrapper: AllTheProviders, ...options });
 
 // re-export everything
 export * from '@testing-library/react';

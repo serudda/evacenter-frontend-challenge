@@ -3,7 +3,7 @@ import { formatDate, formatTime, hasProp, isArray, isEmpty, isNullOrUndefined } 
 describe('formatTime()', () => {
   test('should return the parse time', () => {
     const input = new Date('2019-04-07T10:20:30Z');
-    const output = '5:20:30 am';
+    const output = '10:20:30 am';
     expect(formatTime(input)).toEqual(output);
   });
 });
@@ -11,7 +11,7 @@ describe('formatTime()', () => {
 describe('formatDate()', () => {
   test('should return the parse date', () => {
     const input = '1611917520';
-    const output = 'Jan 29, 2021 • 5:52:00 am';
+    const output = 'Jan 29, 2021 • 10:52:00 am';
     expect(formatDate(input)).toEqual(output);
   });
 });
